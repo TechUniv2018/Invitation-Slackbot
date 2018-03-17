@@ -11,7 +11,7 @@ server.connection({
 server.route(Routes);
 
 if (!module.parent) {
-  server.start((err) => {
+  server.start(function(err) {
     if (err) {
       console.log(err);
     } else {
