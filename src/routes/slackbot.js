@@ -46,7 +46,7 @@ const message = {
 };
 
 module.exports = {
-  method: 'GET',
+  method: 'POST',
   path: '/slackbot',
   handler: (request, response) => {
     processMessage(request.payload.text);
