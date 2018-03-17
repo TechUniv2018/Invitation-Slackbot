@@ -1,4 +1,6 @@
 const bot = require('../helpers/bot');
+const key = require('../constants/keys');
+const req = require('request');
 
 const allUsers = [];
 const loadBotUser = () => {
@@ -49,17 +51,64 @@ module.exports = {
   method: 'POST',
   path: '/slackbot',
   handler: (request, response) => {
-    processMessage(request.payload.text);
-    response(message);
+    console.log(request);
+
+  const recipients = new Set(request.payload.text.split(/[ ]+/)
+    .filter(e => e[0] === '@'));
+console.log(recipients, 'hey');
+const message = {
+  text: request.payload.text,
+  attachments: [
+    {
+      text: 'Would you like to join',
+      fallback: "Shame... buttons aren't supported in this land",
+      callback_id: 'button_tutorial',
+      color: '#3AA3E3',
+      attachment_type: 'default',
+      actions: [
+        {
+          name: 'accept',
+          text: 'Accept',
+          type: 'button',
+          value: 'eventidhere',
+        },
+        {
+          name: 'reject',
+          text: 'Reject',
+          type: 'button',
+          value: 'no',
+        },
+      ],
+    },
+  ],
+};
+console.log('here:::::::::', key);
+const path_to_call = `http://slack.com/api/chat.postMessage?token=${key}&channel=U9SNBJB71&text=${message}`;
+  req(path_to_call, (error, response, body) => {
+    if (!error && response.statusCode == 200) {
+      console.log('Success');
+    } else {
+      console.log(error);
+    }
+  });
+//  for (const id of recipients) {
+//	console.log(id.slice(1));
+   //  bot.postMessageToUser(id.slice(1), message);
+    // bot.postMessageToUser('vishalvasnani123', 'hi you are invited');
+response(message);
+  //}
+    // processMessage(request.payload.text);
+   // response(message);
   },
 };
 const processMessage = (msg) => {
-  const message = msg.text;
-  const recipients = new Set(message.split(/[@]+/)
+  const recipients = new Set(msg.split(/[ ]+/)
     .filter(e => e[0] === '@'));
+console.log(recipients, 'hey');
   for (const id of recipients) {
+	console.log(id.slice(1));
     bot.postMessageToUser(id.slice(1), message);
-    bot.postMessageToUser(id.slice(1), 'hi you are invited');
+    bot.postMessageToUser('vishalvasnani123', 'hi you are invited');
   }
 };
 
