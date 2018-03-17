@@ -1,3 +1,5 @@
+const slackbot = require('./slackbot');
+
 module.exports = [
   {
     method: 'GET',
@@ -6,5 +8,5 @@ module.exports = [
       res('hello world');
     },
   },
-];
+].concat(slackbot);
 
