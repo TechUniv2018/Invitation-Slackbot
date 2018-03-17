@@ -1,4 +1,4 @@
-const slackbot = require('./slackbot');
+var slackbot = require('./slackbot');
 
 module.exports = [
   {
