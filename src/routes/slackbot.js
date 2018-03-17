@@ -57,32 +57,29 @@ module.exports = {
     const recipients = new Set(request.payload.text.split(/[ ]+/)
       .filter(e => e[0] === '@'));
     console.log(recipients, 'hey');
-    const message = {
-      text: request.payload.text,
-      attachments: [
-        {
-          text: 'Would you like to join',
-          fallback: "Shame... buttons aren't supported in this land",
-          callback_id: 'button_tutorial',
-          color: '#3AA3E3',
-          attachment_type: 'default',
-          actions: [
-            {
-              name: 'accept',
-              text: 'Accept',
-              type: 'button',
-              value: 'eventidhere',
-            },
-            {
-              name: 'reject',
-              text: 'Reject',
-              type: 'button',
-              value: 'no',
-            },
-          ],
-        },
-      ],
-    };
+    const message = [
+      {
+        text: 'Would you like to join',
+        fallback: "Shame... buttons aren't supported in this land",
+        callback_id: 'button_tutorial',
+        color: '#3AA3E3',
+        attachment_type: 'default',
+        actions: [
+          {
+            name: 'accept',
+            text: 'Accept',
+            type: 'button',
+            value: 'eventidhere',
+          },
+          {
+            name: 'reject',
+            text: 'Reject',
+            type: 'button',
+            value: 'no',
+          },
+        ],
+      },
+    ];
     // const messageStringify = JSON.stringify(message);
     const urlparam = {
       token: key,
