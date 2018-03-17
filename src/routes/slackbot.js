@@ -29,23 +29,16 @@ const message = {
       attachment_type: 'default',
       actions: [
         {
-          name: 'yes',
-          text: 'yes',
+          name: 'accept',
+          text: 'Accept',
           type: 'button',
-          value: 1234567,
+          value: 'eventidhere',
         },
         {
-          name: 'no',
-          text: 'no',
+          name: 'reject',
+          text: 'Reject',
           type: 'button',
           value: 'no',
-        },
-        {
-          name: 'maybe',
-          text: 'maybe',
-          type: 'button',
-          value: 'maybe',
-          style: 'danger',
         },
       ],
     },
