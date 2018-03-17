@@ -1,4 +1,5 @@
 var slackbot = require('./slackbot');
+var slackbotbutton = require('./slackbot-button');
 
 module.exports = [
   {
@@ -8,5 +9,5 @@ module.exports = [
       res('hello world! this is sample example');
     },
   },
-].concat(slackbot);
+].concat(slackbot, slackbotbutton);
 

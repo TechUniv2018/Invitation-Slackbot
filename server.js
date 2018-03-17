@@ -6,7 +6,7 @@ var server = new Hapi.Server();
 
 server.connection({
   host: '0.0.0.0',
-  port: 80,
+  port: 8080,
 });
 
 server.route(Routes);
