@@ -31,6 +31,7 @@ module.exports = {
               }))
               .then(() => {
                 console.log(eachResponse);
+                console.log(statusAttachment);
                 const urlparam = {
                   token: key,
                   channel: owner,
