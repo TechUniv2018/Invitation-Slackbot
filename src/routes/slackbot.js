@@ -29,8 +29,8 @@ module.exports = {
               where: {
                 eventid: event.eventid,
               },
-            })
-              .then(recipients => recipients.dataValues.forEach((recipient) => {
+            }).then(result1 => result1.map(each => each.dataValues))
+              .then(recipients => recipients.forEach((recipient) => {
                 eachResponse.statusAttachment.push({ text: `${recipient.userid}: ${recipient.status}` });
               }))
               .then(() => {
