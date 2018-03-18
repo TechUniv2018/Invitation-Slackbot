@@ -34,10 +34,10 @@ module.exports = {
     const recipients = new Set(request.payload.text.split(/[ ]+/)
       .filter(e => e[0] === '@'));
       const messageBody = request.payload.text.split(/[ ]/);
-    const type = messageBody[messageBody.indexOf('type:')+1];
-    const time = messageBody[messageBody.indexOf('at:')+1];
+      const type = messageBody[messageBody.indexOf('type:')+1];
+      const time = messageBody[messageBody.indexOf('at:')+1];
     console.log('type and time ',type, time);
-    let venue = '';
+    const venue = '';
     for( const i =messageBody.indexOf('venue:')+1; i< messageBody.indexOf('at:'); i++){
       console.log(i, messageBody[i]);
       venue+= messageBody[i];
