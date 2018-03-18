@@ -15,9 +15,8 @@ module.exports = {
     const time = messageBody[messageBody.indexOf('at:') + 1];
     const tempVenue = request.payload.text.split('venue: ');
     const venue = tempVenue[1].split(' at:')[0];
-    const responseMessage = `You have accepted invite for a ${type} in ${venue} date: ${date} time: ${time}`;
+    const responseMessage = `Hey! you have been invited for a ${type} in ${venue} date: ${date} time: ${time}`;
     console.log('type, venue, date and time ', type, venue, date, time);
-
     const recArr = Array.from(recipients);
     const message = [
       {
