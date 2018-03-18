@@ -32,9 +32,10 @@ module.exports = {
               .then(() => {
                 console.log(eachResponse);
                 console.log(statusAttachment);
+                console.log(owner);
                 const urlparam = {
                   token: key,
-                  channel: owner,
+                  channel: `@${owner}`,
                   attachments: JSON.stringify(statusAttachment),
                   text: eachResponse.text,
                 };
@@ -109,6 +110,7 @@ module.exports = {
               attachments: JSON.stringify(message),
               text: responseMessage,
             };
+            console.log('id: ', id);
             const qs = querystring.stringify(urlparam);
             const pathToCall = `http://slack.com/api/chat.postMessage?${qs}`;
             req(pathToCall, (error, res) => {
