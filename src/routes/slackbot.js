@@ -8,6 +8,47 @@ module.exports = {
   method: 'POST',
   path: '/slackbot',
   handler: (request, response) => {
+    if (request.payload.text === 'status') {
+      const owner = request.payload.user_name;
+      models.events.findAll({
+        where: {
+          createby: `@${owner}`,
+        },
+      }).then((result) => {
+        result.dataValues.forEach((event) => {
+          const eachResponse = {
+            text: `Event: ${event.title} Venue: ${event.venue} Date: ${event.date} Time: ${event.time}`,
+          };
+          const statusAttachment = [];
+          models.responses.findAll({
+            where: {
+              eventid: event.eventid,
+            },
+          })
+            .then(recipients => recipients.dataValues.forEach((recipient) => {
+              eachResponse.statusAttachment.push({ text: `${recipient.userid}: ${recipient.status}` });
+            }))
+            .then(() => {
+              console.log(eachResponse);
+              const urlparam = {
+                token: key,
+                channel: owner,
+                attachments: JSON.stringify(statusAttachment),
+                text: eachResponse.text,
+              };
+              const qs = querystring.stringify(urlparam);
+              const pathToCall = `http://slack.com/api/chat.postMessage?${qs}`;
+              req(pathToCall, (error, res) => {
+                if (!error && res.statusCode === 200) {
+                  console.log('Success');
+                } else {
+                  console.log(error);
+                }
+              });
+            });
+        });
+      });
+    }
     const recipients = new Set(request.payload.text.split(/[ ]+/)
       .filter(e => e[0] === '@'));
     const messageBody = request.payload.text.split(/[ ]/);
