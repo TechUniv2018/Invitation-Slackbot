@@ -1,6 +1,6 @@
 const Hapi = require('hapi');
 const Routes = require('./src/routes');
-const bot = require('./src/helpers/bot');
+// const bot = require('./src/helpers/bot');
 
 const server = new Hapi.Server();
 
