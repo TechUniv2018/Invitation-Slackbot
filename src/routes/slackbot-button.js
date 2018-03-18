@@ -36,7 +36,7 @@ module.exports = {
           .then((result2) => {
             const finalMessage = `You have ${status} the ${result2.title} invitation at ${result2.venue} date: ${result2.date} time: ${result2.time}`;
             if (status === 'Accepted') {
-              getAllUsers().then((values) => {
+              getAllUsers.then((values) => {
                 const newId = values[userid];
                 const urlparam2 = {
                   token: key2,
