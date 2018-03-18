@@ -60,6 +60,7 @@ module.exports = {
           },
         ];
         const promiseArr = [];
+        const invitationPromise = [];
         recArr.forEach((id) => {
           const urlparam = {
             token: key,
@@ -84,25 +85,26 @@ module.exports = {
             }).then(() => { resolve(`${id} inserted!`); });
           });
           promiseArr.push(promise);
-        });
-        Promise.all(promiseArr).then((values) => {
-          console.log(values);
-          const urlparam = {
+          const urlparam2 = {
             token: key,
-            user: 'U9SKHDACE',
+            user: id,
             // attachments: JSON.stringify(message),
-            time: '11:00pm',
+            time,
             // command: '/remind',
             text: 'take it in your mouth',
           };
-          const qs = querystring.stringify(urlparam);
-          console.log(qs);
+          const qs2 = querystring.stringify(urlparam2);
+          console.log(qs2);
           const options = {
             method: 'POST',
-            url: `https://slack.com/api/reminders.add?${qs}`,
+            url: `https://slack.com/api/reminders.add?${qs2}`,
           };
-          rp(options).then((resp) => {
-            console.log(resp);
+          invitationPromise.append(rp(options));
+        });
+        Promise.all(promiseArr).then((values) => {
+          console.log(values);
+          Promise.add(invitationPromise).thern((values2) => {
+            console.log(values2);
             response('Invitation Sent Successfully!');
           });
         });
