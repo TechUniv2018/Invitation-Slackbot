@@ -14,8 +14,12 @@ module.exports = {
         where: {
           createby: `@${owner}`,
         },
-      }).then(result => result.dataValues)
+      }).then((result) => {
+        console.log('before datavalues', result);
+        return result.dataValues;
+      })
         .then((result) => {
+          console.log('after datavalues', result);
           result.forEach((event) => {
             const eachResponse = {
               text: `Event: ${event.title} Venue: ${event.venue} Date: ${event.date} Time: ${event.time}`,
@@ -49,88 +53,89 @@ module.exports = {
               });
           });
         });
-    }
-    const recipients = new Set(request.payload.text.split(/[ ]+/)
-      .filter(e => e[0] === '@'));
-    const messageBody = request.payload.text.split(/[ ]/);
-    const date = messageBody[messageBody.indexOf('date:') + 1];
-    const type = messageBody[messageBody.indexOf('type:') + 1];
-    const time = messageBody[messageBody.indexOf('time:') + 1];
-    const tempVenue = request.payload.text.split('venue: ');
-    const venue = tempVenue[1].split(' date:')[0];
-    const responseMessage = `Hey! you have been invited for a ${type} in ${venue} date: ${date} time: ${time}`;
-    console.log('type: ', type);
-    console.log('venue: ', venue);
-    console.log('date: ', date);
-    console.log('time: ', time);
-    const createby = `@${request.payload.user_name}`;
-    const recArr = Array.from(recipients);
-    let eventId;
-    models.events.count().then((count) => {
-      models.events.create({
-        eventid: count + 1,
-        title: type,
-        venue,
-        time,
-        date,
-        type,
-        createby,
-      }).then((result) => {
-        eventId = result.dataValues.eventid;
-        const message = [
-          {
-            text: 'Would you like to join',
-            fallback: "Shame... buttons aren't supported in this land",
-            callback_id: 'event-id-here',
-            color: '#3AA3E3',
-            attachment_type: 'default',
-            actions: [
-              {
-                name: 'Accepted',
-                text: 'Accept',
-                type: 'button',
-                value: eventId,
-              },
-              {
-                name: 'Rejected',
-                text: 'Reject',
-                type: 'button',
-                value: eventId,
-              },
-            ],
-          },
-        ];
-        const promiseArr = [];
-        recArr.forEach((id) => {
-          const urlparam = {
-            token: key,
-            channel: id,
-            attachments: JSON.stringify(message),
-            text: responseMessage,
-          };
-          const qs = querystring.stringify(urlparam);
-          const pathToCall = `http://slack.com/api/chat.postMessage?${qs}`;
-          req(pathToCall, (error, res) => {
-            if (!error && res.statusCode === 200) {
-              console.log('Success');
-            } else {
-              console.log(error);
-            }
+    } else {
+      const recipients = new Set(request.payload.text.split(/[ ]+/)
+        .filter(e => e[0] === '@'));
+      const messageBody = request.payload.text.split(/[ ]/);
+      const date = messageBody[messageBody.indexOf('date:') + 1];
+      const type = messageBody[messageBody.indexOf('type:') + 1];
+      const time = messageBody[messageBody.indexOf('time:') + 1];
+      const tempVenue = request.payload.text.split('venue: ');
+      const venue = tempVenue[1].split(' date:')[0];
+      const responseMessage = `Hey! you have been invited for a ${type} in ${venue} date: ${date} time: ${time}`;
+      console.log('type: ', type);
+      console.log('venue: ', venue);
+      console.log('date: ', date);
+      console.log('time: ', time);
+      const createby = `@${request.payload.user_name}`;
+      const recArr = Array.from(recipients);
+      let eventId;
+      models.events.count().then((count) => {
+        models.events.create({
+          eventid: count + 1,
+          title: type,
+          venue,
+          time,
+          date,
+          type,
+          createby,
+        }).then((result) => {
+          eventId = result.dataValues.eventid;
+          const message = [
+            {
+              text: 'Would you like to join',
+              fallback: "Shame... buttons aren't supported in this land",
+              callback_id: 'event-id-here',
+              color: '#3AA3E3',
+              attachment_type: 'default',
+              actions: [
+                {
+                  name: 'Accepted',
+                  text: 'Accept',
+                  type: 'button',
+                  value: eventId,
+                },
+                {
+                  name: 'Rejected',
+                  text: 'Reject',
+                  type: 'button',
+                  value: eventId,
+                },
+              ],
+            },
+          ];
+          const promiseArr = [];
+          recArr.forEach((id) => {
+            const urlparam = {
+              token: key,
+              channel: id,
+              attachments: JSON.stringify(message),
+              text: responseMessage,
+            };
+            const qs = querystring.stringify(urlparam);
+            const pathToCall = `http://slack.com/api/chat.postMessage?${qs}`;
+            req(pathToCall, (error, res) => {
+              if (!error && res.statusCode === 200) {
+                console.log('Success');
+              } else {
+                console.log(error);
+              }
+            });
+            const promise = new Promise((resolve) => {
+              models.responses.create({
+                eventid: eventId,
+                userid: id,
+                status: 'Pending',
+              }).then(() => { resolve(`${id} inserted!`); });
+            });
+            promiseArr.push(promise);
           });
-          const promise = new Promise((resolve) => {
-            models.responses.create({
-              eventid: eventId,
-              userid: id,
-              status: 'Pending',
-            }).then(() => { resolve(`${id} inserted!`); });
+          Promise.all(promiseArr).then((values) => {
+            console.log(values);
+            response('Invitation Sent Successfully!');
           });
-          promiseArr.push(promise);
-        });
-        Promise.all(promiseArr).then((values) => {
-          console.log(values);
-          response('Invitation Sent Successfully!');
         });
       });
-    });
+    }
   },
 };
