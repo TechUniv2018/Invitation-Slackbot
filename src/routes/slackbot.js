@@ -85,7 +85,7 @@ module.exports = {
             }).then(() => { resolve(`${id} inserted!`); });
           });
           promiseArr.push(promise);
-          console.log(id);
+          console.log('rasdkjbasdjk', id.split('@')[1]);
           const urlparam2 = {
             token: key,
             user: id.split('@')[1],
