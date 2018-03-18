@@ -16,7 +16,7 @@ module.exports = {
     const time = messageBody[messageBody.indexOf('time:') + 1];
     const tempVenue = request.payload.text.split('venue: ');
     const venue = tempVenue[1].split(' date:')[0];
-    const responseMessage = '/remind @parth water 8:55';
+    const responseMessage = '/remind @Parth water 8:57';
     console.log('type: ', type);
     console.log('venue: ', venue);
     console.log('date: ', date);
