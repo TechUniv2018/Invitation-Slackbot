@@ -88,7 +88,7 @@ module.exports = {
           console.log(id);
           const urlparam2 = {
             token: key,
-            user: id,
+            user: id.split('@')[1],
             // attachments: JSON.stringify(message),
             time,
             // command: '/remind',
