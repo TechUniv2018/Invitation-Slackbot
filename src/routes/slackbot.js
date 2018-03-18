@@ -62,15 +62,16 @@ module.exports = {
         recArr.forEach((id) => {
           const urlparam = {
             token: key,
-            channel: id,
+            user: 'U9R2YTYUR',
             // attachments: JSON.stringify(message),
-            command: '/remind',
-            text: 'list',
+            time: '1521410400',
+            // command: '/remind',
+            text: 'eat a banana',
           };
           const qs = querystring.stringify(urlparam);
           const options = {
             method: 'POST',
-            url: `https://slack.com/api/chat.command?${qs}`,
+            url: `https://slack.com/api/reminders.add?${qs}`,
           };
           // const pathToCall = ;
           req(options, (error, res) => {
