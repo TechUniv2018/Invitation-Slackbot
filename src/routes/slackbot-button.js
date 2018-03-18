@@ -4,11 +4,12 @@ module.exports = {
   method: 'POST',
   path: '/slackbot-button',
   handler: (request, response) => {
-    console.log('incoming request', request.payload);
-    const payload = request.payload.actions;
+    const requestJSON = JSON.parse(request);
+    console.log('incoming request', requestJSON.payload);
+    const payload = requestJSON.payload.actions;
     const status = payload.name;
     const eventid = payload.value;
-    const userid = request.payload.user.name;
+    const userid = requestJSON.payload.user.name;
     console.log('status', status);
     console.log('eventid', eventid);
     console.log('userid', userid);
