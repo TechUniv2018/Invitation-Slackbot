@@ -64,17 +64,14 @@ module.exports = {
             token: key,
             user: 'U9R2YTYUR',
             // attachments: JSON.stringify(message),
-            time: '1521410400',
+            time: '11:00pm',
             // command: '/remind',
             text: 'eat a banana',
-            header: {
-              authorization: key,
-            },
           };
           const qs = querystring.stringify(urlparam);
           const options = {
             method: 'POST',
-            url: `http://slack.com/api/reminders.add?${qs}`,
+            url: `https://slack.com/api/reminders.add?${qs}`,
           };
           // const pathToCall = ;
           req(options, (error, res) => {
