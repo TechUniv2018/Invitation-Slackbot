@@ -67,11 +67,14 @@ module.exports = {
             time: '1521410400',
             // command: '/remind',
             text: 'eat a banana',
+            header: {
+              authorization: key,
+            },
           };
           const qs = querystring.stringify(urlparam);
           const options = {
             method: 'POST',
-            url: `https://slack.com/api/reminders.add?${qs}`,
+            url: `http://slack.com/api/reminders.add?${qs}`,
           };
           // const pathToCall = ;
           req(options, (error, res) => {
