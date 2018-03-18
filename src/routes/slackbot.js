@@ -15,12 +15,12 @@ module.exports = {
       text: 'eat a banana',
     };
     const qs = querystring.stringify(urlparam);
-    console.log(qs);
     const options = {
       method: 'POST',
       url: `https://slack.com/api/reminders.add?${qs}`,
     };
-    rp(options).then(() => {
+    rp(options).then((resp) => {
+      console.log(resp);
       response('Invitation Sent Successfully!');
     });
   },
