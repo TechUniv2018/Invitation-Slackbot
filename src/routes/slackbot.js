@@ -26,7 +26,7 @@ const message = [
     ],
   },
 ];
-const inviteMessage = 'Hey! you have been invited for a meeting '
+
 module.exports = {
   method: 'POST',
   path: '/slackbot',
@@ -36,21 +36,18 @@ module.exports = {
       const messageBody = request.payload.text.split(/[ ]/);
       const type = messageBody[messageBody.indexOf('type:')+1];
       const time = messageBody[messageBody.indexOf('at:')+1];
-    console.log('type and time ',type, time);
-    const venue = '';
-    for( const i =messageBody.indexOf('venue:')+1; i< messageBody.indexOf('at:'); i++){
-      console.log(i, messageBody[i]);
-      venue+= messageBody[i];
-    }
-    console.log('type, venue and time ',type,venue, time);
-    const recArr = Array.from(recipients);
-    recArr.forEach((id) => {
-      const urlparam = {
-        token: key,
-        channel: id,
-        attachments: JSON.stringify(message),
-        text: 'ashcj',
-      };
+      const tempVenue = request.payload.text.split('venue: ');
+      const venue = tempVenue[1].split(' at:');
+      console.log('type, venue and time ',type,venue, time);
+      const recArr = Array.from(recipients);
+      const inviteMessage = 'Hey! you have been invited for a '+ type +' in ' + venue + ' at ' + time;
+      recArr.forEach((id) => {
+        const urlparam = {
+          token: key,
+          channel: id,
+          attachments: JSON.stringify(message),
+          text: inviteMessage,
+        };
       const qs = querystring.stringify(urlparam);
       const path_to_call = `http://slack.com/api/chat.postMessage?${qs}`;
       req(path_to_call, (error, response, body) => {
