@@ -16,7 +16,7 @@ module.exports = {
         },
       }).then((result) => {
         console.log('before datavalues', result);
-        return result.dataValues;
+        return result.map(each => each.dataValues);
       })
         .then((result) => {
           console.log('after datavalues', result);
