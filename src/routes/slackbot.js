@@ -54,10 +54,10 @@ module.exports = {
     const recArr = Array.from(recipients);
     // let i;
     recArr.forEach((id) => {
-      console.log('id:::::::', recArr[i]);
+      console.log('id:::::::', id);
       const urlparam = {
         token: key,
-        channel: recArr[i],
+        channel: id,
         attachments: JSON.stringify(message),
         text: request.payload.text,
       };
