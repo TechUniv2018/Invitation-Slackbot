@@ -1,6 +1,7 @@
 const req = require('request');
 const querystring = require('querystring');
 const rp = require('request-promise');
+const getAllUsers = require('../helpers/getAllUsers');
 // const bot = require('../helpers/bot');
 const key = require('../constants/keys');
 const models = require('../../models');
@@ -85,22 +86,26 @@ module.exports = {
             }).then(() => { resolve(`${id} inserted!`); });
           });
           promiseArr.push(promise);
-          console.log('rasdkjbasdjk', id.split('@')[1]);
-          const urlparam2 = {
-            token: key,
-            user: id.split('@')[1],
-            // attachments: JSON.stringify(message),
-            time,
-            // command: '/remind',
-            text: 'take it in your mouth',
-          };
-          const qs2 = querystring.stringify(urlparam2);
-          console.log(qs2);
-          const options = {
-            method: 'POST',
-            url: `https://slack.com/api/reminders.add?${qs2}`,
-          };
-          invitationPromise.push(rp(options));
+          getAllUsers().then((values) => {
+            console.log('##values', values);
+            const newId = values[id];
+            const urlparam2 = {
+              token: key,
+              user: newId,
+              // attachments: JSON.stringify(message),
+              time,
+              // command: '/remind',
+              text: type,
+            };
+            const qs2 = querystring.stringify(urlparam2);
+            console.log(qs2);
+            const options = {
+              method: 'POST',
+              url: `https://slack.com/api/reminders.add?${qs2}`,
+            };
+            invitationPromise.push(rp(options));
+            console.log('####pushed');
+          });
         });
         Promise.all(promiseArr).then((values) => {
           console.log(values);
