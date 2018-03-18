@@ -50,6 +50,7 @@ module.exports = {
                 });
               });
           });
+          response('End of List');
         });
     } else {
       const recipients = new Set(request.payload.text.split(/[ ]+/)
