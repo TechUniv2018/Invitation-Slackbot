@@ -21,7 +21,7 @@ module.exports = {
     console.log('venue: ', venue);
     console.log('date: ', date);
     console.log('time: ', time);
-    const createby = request.payload.user_name;
+    const createby = `@${request.payload.user_name};
     const recArr = Array.from(recipients);
     let eventId;
     models.events.count().then((count) => {
