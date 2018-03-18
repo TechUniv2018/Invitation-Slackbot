@@ -43,13 +43,13 @@ module.exports = {
               attachment_type: 'default',
               actions: [
                 {
-                  name: 'accept',
+                  name: 'Accepted',
                   text: 'Accept',
                   type: 'button',
                   value: eventId,
                 },
                 {
-                  name: 'reject',
+                  name: 'Rejected',
                   text: 'Reject',
                   type: 'button',
                   eventid: 'dc',
