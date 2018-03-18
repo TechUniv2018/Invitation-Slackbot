@@ -50,15 +50,20 @@ module.exports = {
   handler: (request, response) => {
     const recipients = new Set(request.payload.text.split(/[ ]+/)
       .filter(e => e[0] === '@'));
-  for (const id of recipients) {
+	console.log('rec:', recipients );
+	const recArr = Array.from(recipients);
+	// let i; 
+ recArr.forEach ((id) => {
+	console.log('id:::::::', recArr[i]);
     const urlparam = {
       token: key,
-      channel: id,
+      channel: recArr[i],
       attachments: JSON.stringify(message),
       text: request.payload.text,
     };
     const qs = querystring.stringify(urlparam);
     const path_to_call = `http://slack.com/api/chat.postMessage?${qs}`;
+	console.log(path_to_call);
     req(path_to_call, (error, response, body) => {
       if (!error && response.statusCode == 200) {
         console.log('Success');
