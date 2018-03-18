@@ -24,7 +24,7 @@ module.exports = {
       .then(() => {
         models.events.findOne({
           where: {
-            userid,
+            eventid,
           },
         })
           .then(result1 => result1.dataValues)
