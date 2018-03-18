@@ -12,7 +12,7 @@ module.exports = {
       // attachments: JSON.stringify(message),
       time: '11:00pm',
       // command: '/remind',
-      text: 'eat a banana',
+      text: 'take it in your mouth',
     };
     const qs = querystring.stringify(urlparam);
     console.log(qs);
