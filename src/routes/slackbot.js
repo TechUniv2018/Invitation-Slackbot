@@ -44,13 +44,13 @@ module.exports = {
                 req(pathToCall, (error, res) => {
                   if (!error && res.statusCode === 200) {
                     console.log('Success');
+                    response('End of List');
                   } else {
                     console.log(error);
                   }
                 });
               });
           });
-          response('End of List');
         });
     } else {
       const recipients = new Set(request.payload.text.split(/[ ]+/)
