@@ -14,12 +14,8 @@ module.exports = {
         where: {
           createby: `@${owner}`,
         },
-      }).then((result) => {
-        console.log('before datavalues', result);
-        return result.map(each => each.dataValues);
-      })
+      }).then(result => result.map(each => each.dataValues))
         .then((result) => {
-          console.log('after datavalues', result);
           result.forEach((event) => {
             const eachResponse = {
               text: `Event: ${event.title} Venue: ${event.venue} Date: ${event.date} Time: ${event.time}`,
@@ -31,7 +27,7 @@ module.exports = {
               },
             }).then(result1 => result1.map(each => each.dataValues))
               .then(recipients => recipients.forEach((recipient) => {
-                eachResponse.statusAttachment.push({ text: `${recipient.userid}: ${recipient.status}` });
+                statusAttachment.push({ text: `${recipient.userid}: ${recipient.status}` });
               }))
               .then(() => {
                 console.log(eachResponse);
