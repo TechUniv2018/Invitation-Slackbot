@@ -26,7 +26,7 @@ module.exports = {
     models.events.count().then((count) => {
       models.events.create({
         eventid: count + 1,
-        title: responseMessage,
+        title: type,
         venue,
         time,
         date,
