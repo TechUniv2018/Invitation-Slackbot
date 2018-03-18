@@ -58,5 +58,6 @@ module.exports = {
         }
       });
     });
+    response('Invitation Sent Successfully!');
   },
 };
