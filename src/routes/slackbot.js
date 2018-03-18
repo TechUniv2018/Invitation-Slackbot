@@ -3,30 +3,6 @@ const querystring = require('querystring');
 // const bot = require('../helpers/bot');
 const key = require('../constants/keys');
 
-const message = [
-  {
-    text: 'Would you like to join',
-    fallback: "Shame... buttons aren't supported in this land",
-    callback_id: 'event-id-here',
-    color: '#3AA3E3',
-    attachment_type: 'default',
-    actions: [
-      {
-        name: 'accept',
-        text: 'Accept',
-        type: 'button',
-        value: 'accept',
-      },
-      {
-        name: 'reject',
-        text: 'Reject',
-        type: 'button',
-        value: 'no',
-      },
-    ],
-  },
-];
-
 module.exports = {
   method: 'POST',
   path: '/slackbot',
@@ -40,6 +16,29 @@ module.exports = {
     const venue = tempVenue[1].split(' at:');
     console.log('type, venue and time ', type, venue, time);
     const recArr = Array.from(recipients);
+    const message = [
+      {
+        text: 'Would you like to join',
+        fallback: "Shame... buttons aren't supported in this land",
+        callback_id: 'event-id-here',
+        color: '#3AA3E3',
+        attachment_type: 'default',
+        actions: [
+          {
+            name: 'accept',
+            text: 'Accept',
+            type: 'button',
+            value: `You have accepted invite for a ${type} in ${venue}`,
+          },
+          {
+            name: 'reject',
+            text: 'Reject',
+            type: 'button',
+            value: `You have rejected invite for a ${type} in ${venue}`,
+          },
+        ],
+      },
+    ];
     const inviteMessage = `Hey! you have been invited for a ${type} in ${venue}`;
     recArr.forEach((id) => {
       const urlparam = {
