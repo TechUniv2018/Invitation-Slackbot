@@ -90,7 +90,7 @@ module.exports = {
         });
         Promise.all(promiseArr).then((values) => {
           console.log(values);
-          response('Invitation Sent Successfully!');
+          // response('Invitation Sent Successfully!');
         });
       });
     });
