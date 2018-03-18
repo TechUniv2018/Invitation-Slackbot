@@ -85,6 +85,7 @@ module.exports = {
             }).then(() => { resolve(`${id} inserted!`); });
           });
           promiseArr.push(promise);
+          console.log(id);
           const urlparam2 = {
             token: key,
             user: id,
