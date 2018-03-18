@@ -18,10 +18,10 @@ module.exports = {
       type: Sequelize.STRING,
     },
     date: {
-      type: Sequelize.DATE,
+      type: Sequelize.STRING,
     },
     time: {
-      type: Sequelize.TIME,
+      type: Sequelize.STRING,
     },
     createby: {
       type: Sequelize.STRING,
