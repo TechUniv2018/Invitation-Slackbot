@@ -23,58 +23,60 @@ module.exports = {
     console.log('time: ', time);
     const recArr = Array.from(recipients);
     let eventId;
-    models.events.create({
-      eventid: Number(new Date()),
-      title: responseMessage,
-      venue,
-      time,
-      date,
-      type,
-    })
-      .then((result) => {
-        eventId = result.dataValues.eventid;
-        const message = [
-          {
-            text: 'Would you like to join',
-            fallback: "Shame... buttons aren't supported in this land",
-            callback_id: 'event-id-here',
-            color: '#3AA3E3',
-            attachment_type: 'default',
-            actions: [
-              {
-                name: 'accept',
-                text: 'Accept',
-                type: 'button',
-                value: eventId,
-              },
-              {
-                name: 'reject',
-                text: 'Reject',
-                type: 'button',
-                eventid: 'dc',
-                value: eventId,
-              },
-            ],
-          },
-        ];
-        recArr.forEach((id) => {
-          const urlparam = {
-            token: key,
-            channel: id,
-            attachments: JSON.stringify(message),
-            text: responseMessage,
-          };
-          const qs = querystring.stringify(urlparam);
-          const pathToCall = `http://slack.com/api/chat.postMessage?${qs}`;
-          req(pathToCall, (error, res) => {
-            if (!error && res.statusCode === 200) {
-              console.log('Success');
-            } else {
-              console.log(error);
-            }
+    models.events.count().then((count) => {
+      models.events.create({
+        eventid: count + 1,
+        title: responseMessage,
+        venue,
+        time,
+        date,
+        type,
+      })
+        .then((result) => {
+          eventId = result.dataValues.eventid;
+          const message = [
+            {
+              text: 'Would you like to join',
+              fallback: "Shame... buttons aren't supported in this land",
+              callback_id: 'event-id-here',
+              color: '#3AA3E3',
+              attachment_type: 'default',
+              actions: [
+                {
+                  name: 'accept',
+                  text: 'Accept',
+                  type: 'button',
+                  value: eventId,
+                },
+                {
+                  name: 'reject',
+                  text: 'Reject',
+                  type: 'button',
+                  eventid: 'dc',
+                  value: eventId,
+                },
+              ],
+            },
+          ];
+          recArr.forEach((id) => {
+            const urlparam = {
+              token: key,
+              channel: id,
+              attachments: JSON.stringify(message),
+              text: responseMessage,
+            };
+            const qs = querystring.stringify(urlparam);
+            const pathToCall = `http://slack.com/api/chat.postMessage?${qs}`;
+            req(pathToCall, (error, res) => {
+              if (!error && res.statusCode === 200) {
+                console.log('Success');
+              } else {
+                console.log(error);
+              }
+            });
           });
+          response('Invitation Sent Successfully!');
         });
-        response('Invitation Sent Successfully!');
-      });
+    });
   },
 };
