@@ -10,11 +10,14 @@ module.exports = {
     const recipients = new Set(request.payload.text.split(/[ ]+/)
       .filter(e => e[0] === '@'));
     const messageBody = request.payload.text.split(/[ ]/);
+    const date = messageBody[messageBody.indexOf('date:') + 1];
     const type = messageBody[messageBody.indexOf('type:') + 1];
     const time = messageBody[messageBody.indexOf('at:') + 1];
     const tempVenue = request.payload.text.split('venue: ');
-    const venue = tempVenue[1].split(' at:');
-    console.log('type, venue and time ', type, venue, time);
+    const venue = tempVenue[1].split(' at:')[0];
+    const responseMessage = `You have accepted invite for a ${type} in ${venue} date: ${date} time: ${time}`;
+    console.log('type, venue, date and time ', type, venue, date, time);
+
     const recArr = Array.from(recipients);
     const message = [
       {
@@ -28,24 +31,23 @@ module.exports = {
             name: 'accept',
             text: 'Accept',
             type: 'button',
-            value: `You have accepted invite for a ${type} in ${venue}`,
+            value: responseMessage,
           },
           {
             name: 'reject',
             text: 'Reject',
             type: 'button',
-            value: `You have rejected invite for a ${type} in ${venue}`,
+            value: responseMessage,
           },
         ],
       },
     ];
-    const inviteMessage = `Hey! you have been invited for a ${type} in ${venue}`;
     recArr.forEach((id) => {
       const urlparam = {
         token: key,
         channel: id,
         attachments: JSON.stringify(message),
-        text: inviteMessage,
+        text: responseMessage,
       };
       const qs = querystring.stringify(urlparam);
       const pathToCall = `http://slack.com/api/chat.postMessage?${qs}`;
