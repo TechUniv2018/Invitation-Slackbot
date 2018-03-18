@@ -4,6 +4,7 @@ module.exports = {
   method: 'POST',
   path: '/slackbot-button',
   handler: (request, response) => {
+    console.log(request);
     // const requestJSON = JSON.parse(request);
     // console.log('incoming request', request.payload);
     const reqJSON = JSON.parse(request.payload.payload);
