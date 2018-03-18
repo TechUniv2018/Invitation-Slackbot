@@ -1,12 +1,13 @@
 const rp = require('request-promise');
 const querystring = require('querystring');
+const key = require('../constants/keys');
 
 module.exports = {
   method: 'POST',
   path: '/slackbot',
   handler: (request, response) => {
     const urlparam = {
-      token: 'xoxp-332500622342-332663452422-331745669331-90dd130978e634f24e4cd9cc62500e25',
+      token: key,
       user: 'U9SKHDACE',
       // attachments: JSON.stringify(message),
       time: '11:00pm',
@@ -14,6 +15,7 @@ module.exports = {
       text: 'eat a banana',
     };
     const qs = querystring.stringify(urlparam);
+    console.log(qs);
     const options = {
       method: 'POST',
       url: `https://slack.com/api/reminders.add?${qs}`,
