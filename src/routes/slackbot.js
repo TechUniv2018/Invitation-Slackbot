@@ -16,7 +16,11 @@ module.exports = {
     const tempVenue = request.payload.text.split('venue: ');
     const venue = tempVenue[1].split(' at:')[0];
     const responseMessage = `Hey! you have been invited for a ${type} in ${venue} date: ${date} time: ${time}`;
-    console.log('type, venue, date and time ', type, venue, date, time);
+    console.log('type: ', type);
+    console.log('venue: ', venue);
+    console.log('date: ', date);
+    console.log('time: ', time);
+    // console.log('type, venue, date and time ', type, venue, date, time);
     const recArr = Array.from(recipients);
     const message = [
       {
