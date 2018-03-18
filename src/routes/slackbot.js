@@ -69,7 +69,7 @@ module.exports = {
           const qs = querystring.stringify(urlparam);
           const options = {
             method: 'POST',
-            url: `http://slack.com/api/chat.command?${qs}`,
+            url: `https://slack.com/api/chat.command?${qs}`,
           };
           // const pathToCall = ;
           req(options, (error, res) => {
@@ -90,7 +90,7 @@ module.exports = {
         });
         Promise.all(promiseArr).then((values) => {
           console.log(values);
-          // response('Invitation Sent Successfully!');
+          response('Invitation Sent Successfully!');
         });
       });
     });
