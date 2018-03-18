@@ -40,7 +40,7 @@ module.exports = {
       const venue = tempVenue[1].split(' at:');
       console.log('type, venue and time ',type,venue, time);
       const recArr = Array.from(recipients);
-      const inviteMessage = 'Hey! you have been invited for a '+ type +' in ' + venue + ' at ' + time;
+      const inviteMessage = 'Hey! you have been invited for a '+ type +' in ' + venue;
       recArr.forEach((id) => {
         const urlparam = {
           token: key,
