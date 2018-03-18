@@ -32,7 +32,6 @@ module.exports = {
             const finalMessage = `You have ${status} the ${result2.type} invitation on ${result2.venue} date: ${result2.date} time: ${result2.time}`;
             response(finalMessage);
           });
-        response();
       });
   },
 };
