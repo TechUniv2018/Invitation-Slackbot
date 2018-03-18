@@ -103,7 +103,7 @@ module.exports = {
         });
         Promise.all(promiseArr).then((values) => {
           console.log(values);
-          Promise.add(invitationPromise).then((values2) => {
+          Promise.all(invitationPromise).then((values2) => {
             console.log(values2);
             response('Invitation Sent Successfully!');
           });
