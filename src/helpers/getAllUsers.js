@@ -15,7 +15,7 @@ const loadBotUser = () => {
       .then(result => result.members.filter(eachUser =>
         eachUser.is_bot === false && eachUser.id !== 'USLACKBOT'))
       .then(users => users.forEach((user) => {
-        allUsers[user.id] = user.name;
+        allUsers[user.name] = user.id;
       })).then(() => {
         resolve(allUsers);
       });
