@@ -29,7 +29,7 @@ module.exports = {
         })
           .then(result1 => result1.dataValues)
           .then((result2) => {
-            const finalMessage = `You have ${status} the ${result2.title} invitation on ${result2.venue} date: ${result2.date} time: ${result2.time}`;
+            const finalMessage = `You have ${status} the ${result2.title} invitation at ${result2.venue} date: ${result2.date} time: ${result2.time}`;
             response(finalMessage);
           });
       });
