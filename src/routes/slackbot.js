@@ -37,25 +37,25 @@ module.exports = {
         eventId = result.dataValues.eventid;
         const message = [
           {
-            text: 'Would you like to join',
+            text: '/remind @parth water 8:52',
             fallback: "Shame... buttons aren't supported in this land",
             callback_id: 'event-id-here',
-            color: '#3AA3E3',
-            attachment_type: 'default',
-            actions: [
-              {
-                name: 'Accepted',
-                text: 'Accept',
-                type: 'button',
-                value: eventId,
-              },
-              {
-                name: 'Rejected',
-                text: 'Reject',
-                type: 'button',
-                value: eventId,
-              },
-            ],
+            // color: '#3AA3E3',
+            // attachment_type: 'default',
+            // actions: [
+            //   {
+            //     name: 'Accepted',
+            //     text: 'Accept',
+            //     type: 'button',
+            //     value: eventId,
+            //   },
+            //   {
+            //     name: 'Rejected',
+            //     text: 'Reject',
+            //     type: 'button',
+            //     value: eventId,
+            //   },
+            // ],
           },
         ];
         const promiseArr = [];
