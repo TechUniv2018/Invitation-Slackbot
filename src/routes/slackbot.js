@@ -3,28 +3,11 @@ const querystring = require('querystring');
 const bot = require('../helpers/bot');
 const key = require('../constants/keys');
 
-// const allUsers = [];
-// const loadBotUser = () => {
-//   const promise = new Promise((resolve) => {
-//     bot.getUsers()
-//       .then(result => result.members.filter(eachUser =>
-//         eachUser.is_bot === false && eachUser.id !== 'USLACKBOT'))
-//       .then(users => users.forEach((user) => {
-//         allUsers[user.id] = user.name;
-//       })).then(() => {
-//         resolve(allUsers);
-//       });
-//   });
-//   return promise;
-// };
-// bot.on('start', () => {
-//   loadBotUser();
-// });
 const message = [
   {
     text: 'Would you like to join',
     fallback: "Shame... buttons aren't supported in this land",
-    callback_id: 'button_tutorial',
+    callback_id: 'event-id-here',
     color: '#3AA3E3',
     attachment_type: 'default',
     actions: [
@@ -32,7 +15,7 @@ const message = [
         name: 'accept',
         text: 'Accept',
         type: 'button',
-        value: 'eventidhere',
+        value: 'accept',
       },
       {
         name: 'reject',
@@ -43,27 +26,32 @@ const message = [
     ],
   },
 ];
-
+const inviteMessage = 'Hey! you have been invited for a meeting '
 module.exports = {
   method: 'POST',
   path: '/slackbot',
   handler: (request, response) => {
     const recipients = new Set(request.payload.text.split(/[ ]+/)
       .filter(e => e[0] === '@'));
-    console.log('rec:', recipients);
+      const messageBody = request.payload.text.split(/[ ]/);
+    const type = messageBody[messageBody.indexOf('type:')+1];
+    const time = messageBody[messageBody.indexOf('at:')+1];
+    console.log('type and time ',type, time);
+    let venue = '';
+    for( const i =messageBody.indexOf('venue:')+1; i< messageBody.indexOf('at:'); i++){
+      venue+= messageBody[i];
+    }
+    console.log('type, venue and time ',type,venue, time);
     const recArr = Array.from(recipients);
-    // let i;
     recArr.forEach((id) => {
-      console.log('id:::::::', id);
       const urlparam = {
         token: key,
         channel: id,
         attachments: JSON.stringify(message),
-        text: request.payload.text,
+        text: 'ashcj',
       };
       const qs = querystring.stringify(urlparam);
       const path_to_call = `http://slack.com/api/chat.postMessage?${qs}`;
-      console.log(path_to_call);
       req(path_to_call, (error, response, body) => {
         if (!error && response.statusCode == 200) {
           console.log('Success');
