@@ -64,7 +64,7 @@ module.exports = {
             token: key,
             channel: id,
             // attachments: JSON.stringify(message),
-            command: '/remind',
+            command: JSON.stringify('/remind'),
           };
           const qs = querystring.stringify(urlparam);
           const options = {
