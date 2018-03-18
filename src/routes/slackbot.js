@@ -99,7 +99,7 @@ module.exports = {
             method: 'POST',
             url: `https://slack.com/api/reminders.add?${qs2}`,
           };
-          invitationPromise.append(rp(options));
+          invitationPromise.push(rp(options));
         });
         Promise.all(promiseArr).then((values) => {
           console.log(values);
