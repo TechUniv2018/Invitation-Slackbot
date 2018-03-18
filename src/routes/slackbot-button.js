@@ -38,7 +38,7 @@ module.exports = {
             if (status === 'Accepted') {
               getAllUsers.then((values) => {
                 console.log('values', values);
-                const newId = values[userid];
+                const newId = values[userid.split('@')[1]];
                 console.log('userid', userid);
                 console.log('newId', newId);
                 const urlparam2 = {
