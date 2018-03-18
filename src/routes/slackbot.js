@@ -39,6 +39,7 @@ module.exports = {
     console.log('type and time ',type, time);
     let venue = '';
     for( const i =messageBody.indexOf('venue:')+1; i< messageBody.indexOf('at:'); i++){
+      console.log(i, messageBody[i]);
       venue+= messageBody[i];
     }
     console.log('type, venue and time ',type,venue, time);
