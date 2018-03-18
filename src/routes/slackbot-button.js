@@ -10,7 +10,7 @@ module.exports = {
     const { actions } = reqJSON;
     const status = actions[0].name;
     const eventid = actions[0].value;
-    const userid = reqJSON.user.name;
+    const userid = `@${reqJSON.user.name}`;
     console.log('status', status);
     console.log('eventid', eventid);
     console.log('userid', userid);
