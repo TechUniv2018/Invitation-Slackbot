@@ -44,6 +44,7 @@ module.exports = {
                 req(pathToCall, (error, res) => {
                   if (!error && res.statusCode === 200) {
                     console.log('Success');
+                    response('End of List');
                   } else {
                     console.log(error);
                   }
