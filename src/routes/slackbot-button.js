@@ -60,6 +60,8 @@ module.exports = {
                   response(finalMessage);
                 });
               });
+            } else {
+              response(finalMessage);
             }
           });
       });
