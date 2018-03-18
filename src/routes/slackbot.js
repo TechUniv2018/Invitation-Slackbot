@@ -64,11 +64,15 @@ module.exports = {
             token: key,
             channel: id,
             // attachments: JSON.stringify(message),
-            command: '/remind @Parth water 9:15pm',
+            command: '/remind',
           };
           const qs = querystring.stringify(urlparam);
-          const pathToCall = `http://slack.com/api/chat.command?${qs}`;
-          req(pathToCall, (error, res) => {
+          const options = {
+            method: 'POST',
+            url: `http://slack.com/api/chat.command?${qs}`,
+          };
+          // const pathToCall = ;
+          req(options, (error, res) => {
             if (!error && res.statusCode === 200) {
               console.log('Success');
             } else {
