@@ -12,9 +12,9 @@ module.exports = {
     const messageBody = request.payload.text.split(/[ ]/);
     const date = messageBody[messageBody.indexOf('date:') + 1];
     const type = messageBody[messageBody.indexOf('type:') + 1];
-    const time = messageBody[messageBody.indexOf('at:') + 1];
+    const time = messageBody[messageBody.indexOf('time:') + 1];
     const tempVenue = request.payload.text.split('venue: ');
-    const venue = tempVenue[1].split(' at:')[0];
+    const venue = tempVenue[1].split(' date:')[0];
     const responseMessage = `Hey! you have been invited for a ${type} in ${venue} date: ${date} time: ${time}`;
     console.log('type: ', type);
     console.log('venue: ', venue);
